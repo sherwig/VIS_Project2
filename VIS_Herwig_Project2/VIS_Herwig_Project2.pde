@@ -5,7 +5,7 @@ float zVal = 950;
 float rotX = PI;
 KinectPV2 kinect;
 int[] randomGetter=new int[8];
-
+boolean setActive;
 
 void setup() 
 {
@@ -22,7 +22,7 @@ void setup()
   kinect.init();
   strokeWeight(4);
   
-randomGetter=getRandom(randomGetter);
+  randomGetter=getRandom(randomGetter);
   println(randomGetter);
 
 }
@@ -48,55 +48,72 @@ void SkullyBoi()
    //ArrayList<KSkeleton> skeletonArray =  kinect.getSkeleton3d();   
   ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonColorMap();
    //ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonDepthMap();
-
+   if (skeletonArray.size()==0)
+    {     
+      setNonActive();
+    }
+  
   //individual JOINTS
   for (int i = 0; i < skeletonArray.size(); i++) {
+    println(skeletonArray.size());
     KSkeleton skeleton = (KSkeleton) skeletonArray.get(i);
-    if (skeleton.isTracked()) {
+   
+//else if (skeleton.isTracked() && setActive==false) 
+   if(skeleton.isTracked())
+    {
+     // setActive=true;
       KJoint[] joints = skeleton.getJoints();
       //Draw body
       color col  = skeleton.getIndexColor();
       stroke(col);
       
-      if(randomGetter[0]==1)
+      if(randomGetter[i]==1)
       {
          drawBody1(joints);
       }
       
-      else if(randomGetter[1]==2)
+      else if(randomGetter[i]==2)
       {
          drawBody2(joints);
       }
       
-      else if(randomGetter[2]==3)
+      else if(randomGetter[i]==3)
       {
          drawBody3(joints);
       }
       
-      else if(randomGetter[3]==4)
+      else if(randomGetter[i]==4)
       {
          drawBody4(joints);
       }
-      else if(randomGetter[4]==5)
+      else if(randomGetter[i]==5)
       {
          drawBody5(joints);
       }
-      else if(randomGetter[5]==6)
+      else if(randomGetter[i]==6)
       {
          drawBody6(joints);
       }
-      else if(randomGetter[6]==7)
+      else if(randomGetter[i]==7)
       {
          drawBody7(joints);
       }
       
-      else if(randomGetter[7]==8)
+      else if(randomGetter[i]==8)
       {
          drawBody8(joints);
       } 
-    }       
-  }
+    }   
+  
 
+  }
+  
+}
+
+void setNonActive()
+{
+  randomGetter=getRandom(randomGetter);
+//  println(randomGetter);
 }
 
 void drawBody1(KJoint[] joints)
