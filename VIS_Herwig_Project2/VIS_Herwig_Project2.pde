@@ -12,9 +12,9 @@ void setup()
   colorMode(RGB);
   kinect = new KinectPV2(this);
 
-//  kinect.enableSkeletonColorMap(true);
+  kinect.enableSkeletonColorMap(true);
 //  kinect.enableColorImg(true);
-  kinect.enableSkeleton3DMap(true);
+//  kinect.enableSkeleton3DMap(true);
   kinect.enableDepthMaskImg(true);
   //kinect.enableSkeletonDepthMap(true);
   
