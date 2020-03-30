@@ -19,28 +19,30 @@ void setup()
   //kinect.enableSkeletonDepthMap(true);
   
   kinect.init();
+  strokeWeight(4);
 
 }
 
 void draw() {
   background(0);
 
-  pushMatrix();
-  stroke(0,0,255);
-  translate(width/2, height/2, 0);
-  scale(zVal);
-  rotateX(rotX);
-  SkullyBoi();
-  popMatrix();
-
+  //pushMatrix();
+  //stroke(0,0,255);
+  //translate(width/2, height/2, 0);
+  //scale(zVal);
+  //rotateX(rotX);
   //SkullyBoi();
+  //popMatrix();
+
+  SkullyBoi();
 
 }
 
 
 void SkullyBoi()
 {
-   ArrayList<KSkeleton> skeletonArray =  kinect.getSkeleton3d();   
+   //ArrayList<KSkeleton> skeletonArray =  kinect.getSkeleton3d();   
+    ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonColorMap();
    //ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonDepthMap();
 
   //individual JOINTS
@@ -52,7 +54,7 @@ void SkullyBoi()
       //Draw body
       color col  = skeleton.getIndexColor();
       stroke(col);
-      drawBody(joints);
+      drawBody3(joints);
     }       
   }
 
@@ -83,15 +85,22 @@ void drawBody2(KJoint[] joints)
 
 void drawBody3(KJoint[] joints)
 {
-  drawCurvedBone(joints,KinectPV2.JointType_FootLeft,KinectPV2.JointType_KneeLeft,KinectPV2.JointType_HipLeft,KinectPV2.JointType_HandRight);
-  drawCurvedBone(joints,KinectPV2.JointType_FootRight,KinectPV2.JointType_KneeRight,KinectPV2.JointType_HipRight,KinectPV2.JointType_HandLeft);
+  drawCurvedBone(joints,KinectPV2.JointType_Head,KinectPV2.JointType_ShoulderLeft,KinectPV2.JointType_ElbowLeft,KinectPV2.JointType_HandLeft);
+  drawCurvedBone(joints,KinectPV2.JointType_Head,KinectPV2.JointType_ShoulderRight,KinectPV2.JointType_ElbowRight,KinectPV2.JointType_HandRight);
 
+  
+  drawCurvedBone(joints,KinectPV2.JointType_FootLeft,KinectPV2.JointType_KneeLeft,KinectPV2.JointType_HipLeft,KinectPV2.JointType_Head);
+  drawCurvedBone(joints,KinectPV2.JointType_FootRight,KinectPV2.JointType_KneeRight,KinectPV2.JointType_HipRight,KinectPV2.JointType_Head);
 }
 
 void drawBody4(KJoint[] joints)
 {
-  drawBezierBone(joints,KinectPV2.JointType_FootLeft,KinectPV2.JointType_KneeLeft,KinectPV2.JointType_HipLeft,KinectPV2.JointType_HandRight);
-  drawBezierBone(joints,KinectPV2.JointType_FootRight,KinectPV2.JointType_KneeRight,KinectPV2.JointType_HipRight,KinectPV2.JointType_HandLeft);
+  drawBezierBone(joints,KinectPV2.JointType_Head,KinectPV2.JointType_ShoulderLeft,KinectPV2.JointType_ElbowLeft,KinectPV2.JointType_HandLeft);
+  drawBezierBone(joints,KinectPV2.JointType_Head,KinectPV2.JointType_ShoulderRight,KinectPV2.JointType_ElbowRight,KinectPV2.JointType_HandRight);
+
+  
+  drawBezierBone(joints,KinectPV2.JointType_FootLeft,KinectPV2.JointType_KneeLeft,KinectPV2.JointType_HipLeft,KinectPV2.JointType_Head);
+  drawBezierBone(joints,KinectPV2.JointType_FootRight,KinectPV2.JointType_KneeRight,KinectPV2.JointType_HipRight,KinectPV2.JointType_Head);
 }
 
 
@@ -142,26 +151,45 @@ void drawBody(KJoint[] joints) {
 }
 
 void drawJoint(KJoint[] joints, int jointType) {
-  strokeWeight(.05);   
-  point(joints[jointType].getX(), joints[jointType].getY(), joints[jointType].getZ());
+  //strokeWeight(.05);   
+  //point(joints[jointType].getX(), joints[jointType].getY(), joints[jointType].getZ());
+  pushMatrix();
+  translate(joints[jointType].getX(), joints[jointType].getY(), joints[jointType].getZ());
+  ellipse(0, 0, 10, 10);
+  popMatrix();
 }
 
 
 
 void drawBone(KJoint[] joints, int jointType1, int jointType2) {
-  strokeWeight(.01);
-  line(joints[jointType1].getX(), joints[jointType1].getY(), joints[jointType1].getZ(),joints[jointType2].getX(), joints[jointType2].getY(), joints[jointType2].getZ());
+  //strokeWeight(.01);
+  //line(joints[jointType1].getX(), joints[jointType1].getY(), joints[jointType1].getZ(),joints[jointType2].getX(), joints[jointType2].getY(), joints[jointType2].getZ());
 
+  pushMatrix();
+  translate(joints[jointType1].getX(), joints[jointType1].getY(), joints[jointType1].getZ());
+  ellipse(0, 0, 10, 10);
+  popMatrix();
+  line(joints[jointType1].getX(), joints[jointType1].getY(), joints[jointType1].getZ(), joints[jointType2].getX(), joints[jointType2].getY(), joints[jointType2].getZ());
 }
 
 void drawCurvedBone(KJoint[] joints, int jointType1, int jointType2, int jointType3, int jointType4) {
-  strokeWeight(.01);
-  curve(joints[jointType1].getX(), joints[jointType1].getY(), joints[jointType1].getZ(),joints[jointType2].getX(), joints[jointType2].getY(), joints[jointType2].getZ(),joints[jointType3].getX(), joints[jointType3].getY(), joints[jointType3].getZ(),joints[jointType4].getX(), joints[jointType4].getY(), joints[jointType4].getZ());
-
+  //strokeWeight(.01);
+  //curve(joints[jointType1].getX(), joints[jointType1].getY(), joints[jointType1].getZ(),joints[jointType2].getX(), joints[jointType2].getY(), joints[jointType2].getZ(),joints[jointType3].getX(), joints[jointType3].getY(), joints[jointType3].getZ(),joints[jointType4].getX(), joints[jointType4].getY(), joints[jointType4].getZ());
+  noFill();
+  pushMatrix();
+  translate(joints[jointType1].getX(), joints[jointType1].getY(), joints[jointType1].getZ());
+  ellipse(0, 0, 10, 10);
+  popMatrix();
+  curve(joints[jointType1].getX(), joints[jointType1].getY(), joints[jointType1].getZ(), joints[jointType2].getX(), joints[jointType2].getY(), joints[jointType2].getZ(),joints[jointType3].getX(), joints[jointType3].getY(), joints[jointType3].getZ(),joints[jointType4].getX(), joints[jointType4].getY(), joints[jointType4].getZ());
 }
 
 void drawBezierBone(KJoint[] joints, int jointType1, int jointType2, int jointType3, int jointType4) {
-  strokeWeight(.01);
-  bezier(joints[jointType1].getX(), joints[jointType1].getY(), joints[jointType1].getZ(),joints[jointType2].getX(), joints[jointType2].getY(), joints[jointType2].getZ(),joints[jointType3].getX(), joints[jointType3].getY(), joints[jointType3].getZ(),joints[jointType4].getX(), joints[jointType4].getY(), joints[jointType4].getZ());
-
+  //strokeWeight(.01);
+  //bezier(joints[jointType1].getX(), joints[jointType1].getY(), joints[jointType1].getZ(),joints[jointType2].getX(), joints[jointType2].getY(), joints[jointType2].getZ(),joints[jointType3].getX(), joints[jointType3].getY(), joints[jointType3].getZ(),joints[jointType4].getX(), joints[jointType4].getY(), joints[jointType4].getZ());
+  noFill();
+  pushMatrix();
+  translate(joints[jointType1].getX(), joints[jointType1].getY(), joints[jointType1].getZ());
+  ellipse(0, 0, 10, 10);
+  popMatrix();
+  bezier(joints[jointType1].getX(), joints[jointType1].getY(), joints[jointType1].getZ(), joints[jointType2].getX(), joints[jointType2].getY(), joints[jointType2].getZ(),joints[jointType3].getX(), joints[jointType3].getY(), joints[jointType3].getZ(),joints[jointType4].getX(), joints[jointType4].getY(), joints[jointType4].getZ());
 }
