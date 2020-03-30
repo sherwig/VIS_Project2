@@ -4,7 +4,8 @@ import java.util.ArrayList;
 float zVal = 950;
 float rotX = PI;
 KinectPV2 kinect;
-int[] randomStuff=new int[8];
+int[] randomGetter=new int[8];
+
 
 void setup() 
 {
@@ -20,6 +21,9 @@ void setup()
   
   kinect.init();
   strokeWeight(4);
+  
+randomGetter=getRandom(randomGetter);
+  println(randomGetter);
 
 }
 
@@ -42,20 +46,54 @@ void draw() {
 void SkullyBoi()
 {
    //ArrayList<KSkeleton> skeletonArray =  kinect.getSkeleton3d();   
-    ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonColorMap();
+  ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonColorMap();
    //ArrayList<KSkeleton> skeletonArray =  kinect.getSkeletonDepthMap();
-  int[] randomGetter=getRandom(randomStuff);
-  println(randomStuff);
+
   //individual JOINTS
   for (int i = 0; i < skeletonArray.size(); i++) {
     KSkeleton skeleton = (KSkeleton) skeletonArray.get(i);
     if (skeleton.isTracked()) {
       KJoint[] joints = skeleton.getJoints();
-    
       //Draw body
       color col  = skeleton.getIndexColor();
       stroke(col);
-      drawBody8(joints);
+      
+      if(randomGetter[0]==1)
+      {
+         drawBody1(joints);
+      }
+      
+      else if(randomGetter[1]==2)
+      {
+         drawBody2(joints);
+      }
+      
+      else if(randomGetter[2]==3)
+      {
+         drawBody3(joints);
+      }
+      
+      else if(randomGetter[3]==4)
+      {
+         drawBody4(joints);
+      }
+      else if(randomGetter[4]==5)
+      {
+         drawBody5(joints);
+      }
+      else if(randomGetter[5]==6)
+      {
+         drawBody6(joints);
+      }
+      else if(randomGetter[6]==7)
+      {
+         drawBody7(joints);
+      }
+      
+      else if(randomGetter[7]==8)
+      {
+         drawBody8(joints);
+      } 
     }       
   }
 
